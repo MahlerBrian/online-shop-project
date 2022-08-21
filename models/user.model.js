@@ -11,8 +11,12 @@ class User {
         this.address = {
             street: street,
             zipCode: postal,
-            city: city
+            city: city,
         };
+    }
+
+    getUserWithSameEmail() {
+        return db.getDb().collection('users').findOne({ email: this.email });
     }
 
     async signup(){
@@ -24,6 +28,10 @@ class User {
             name: this.name,
             address: this.address
         });
+    }
+
+    comparePassword(hashedPassword) {
+        return bcrypt.compare(this.password, hashedPassword);
     }
 }
 
